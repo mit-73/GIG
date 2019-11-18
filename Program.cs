@@ -58,6 +58,23 @@ namespace GIG
 
         private static void RunWithArgs(string[] args)
         {
+            string key = null;
+
+            if (args[0] == "-key" || args[0] == "-k")
+            {
+                for (int i = 1; i < args.Length; i++)
+                {
+                    key += args[i];
+                }
+            }
+
+            if (args[0] == "-list" || args[0] == "-l")
+            {
+                Generator.ShowTableIgnores();
+            }
+
+            if (key != null) Generator.ShowIgnore(key);
+            if (key == "") Console.WriteLine($"Error");
         }
     }
 }

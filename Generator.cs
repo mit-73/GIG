@@ -10,7 +10,7 @@ namespace GIG
             const int width = -30;
             var ignores = Api.GetIgnores();
             int quarter = ignores.Count / 4;
-            
+
             for (int a = 0, b = quarter, c = quarter * 2, d = quarter * 3;
                 a < quarter | b < quarter * 2 | c < quarter * 3 | d < quarter * 4;
                 a++, b++, c++, d++)
@@ -26,7 +26,7 @@ namespace GIG
             {
                 Console.WriteLine(ingnore);
                 ClipboardHelper.SetText(ingnore);
-                Console.WriteLine("This .gitignore is written in a clipboard.");
+                Console.WriteLine($"This .gitignore ({types}) is written in a clipboard.");
             }
         }
     }
