@@ -9,15 +9,16 @@ namespace GIG
 {
     public class Api
     {
-        private const string _site = "https://www.gitignore.io/api/";
+        private const string Site = "https://www.gitignore.io/api/";
 
-        public List<string> GetListIgnores()
+        public static List<string> GetIgnores()
         {
             try
             {
                 List<string> listIgnores;
+                char[] separators = {',', '\n'};
 
-                WebRequest request = WebRequest.Create(_site + "list");
+                WebRequest request = WebRequest.Create(Site + "list");
 
                 using (WebResponse response = request.GetResponse())
                 {
@@ -25,7 +26,7 @@ namespace GIG
                     {
                         using (StreamReader reader = new StreamReader(stream))
                         {
-                            listIgnores = reader.ReadToEnd().Split(',').ToList();
+                            listIgnores = reader.ReadToEnd().Split(separators).ToList();
                         }
                     }
                 }
@@ -39,21 +40,20 @@ namespace GIG
                 if (status == WebExceptionStatus.ProtocolError)
                 {
                     HttpWebResponse httpResponse = (HttpWebResponse) ex.Response;
-                    Console.WriteLine("Error code: {0} - {1}",
-                        (int) httpResponse.StatusCode, httpResponse.StatusCode);
+                    Console.WriteLine($"Error code: {(int) httpResponse.StatusCode} - {httpResponse.StatusCode}");
                 }
 
                 return new List<string> {""};
             }
         }
 
-        public string GetIgnore(string types)
+        public static string GetIgnore(string types)
         {
             try
             {
                 string ignore;
 
-                WebRequest request = WebRequest.Create(_site + types);
+                WebRequest request = WebRequest.Create(Site + types);
 
                 using (WebResponse response = request.GetResponse())
                 {
@@ -75,8 +75,7 @@ namespace GIG
                 if (status == WebExceptionStatus.ProtocolError)
                 {
                     HttpWebResponse httpResponse = (HttpWebResponse) ex.Response;
-                    Console.WriteLine("Error code: {0} - {1}",
-                        (int) httpResponse.StatusCode, httpResponse.StatusCode);
+                    Console.WriteLine($"Error code: {(int) httpResponse.StatusCode} - {httpResponse.StatusCode}");
                 }
 
                 return "";
